@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 Thời Khóa Biểu PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #eef1fb;
+  --surface: #ffffff;
+  --surface2: #f5f7ff;
+  --border: #dde2f0;
+  --text: #1c1f35;
+  --text2: #7580a0;
+  --accent: #3b5bdb;
+  --accent2: #7048e8;
+  --morning: #f59f00;
+  --afternoon: #2f9e44;
+  --session-am: #fff8e6;
+  --session-pm: #ebfbee;
+  --radius: 14px;
+  --shadow: 0 2px 10px rgba(59,91,219,0.07);
+  --shadow-md: 0 4px 20px rgba(59,91,219,0.12);
+  --shadow-lg: 0 8px 32px rgba(59,91,219,0.18);
+  --sat: #e64980;
+  --sun: #e03131;
+}
+body.dark {
+  --bg: #0d1117;
+  --surface: #161b27;
+  --surface2: #1e2535;
+  --border: #2a3047;
+  --text: #e8ecff;
+  --text2: #6272a4;
+  --shadow: 0 2px 10px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+  --session-am: #2a2415;
+  --session-pm: #152219;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--shadow);
+}
+.logo {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-icon { font-size: 24px; -webkit-text-fill-color: initial; }
+.header-right { display: flex; gap: 8px; align-items: center; }
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+button { font-family: 'Nunito', sans-serif; cursor: pointer; border: none; transition: all 0.18s; }
+.btn {
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+}
+.btn:hover { background: var(--border); transform: translateY(-1px); }
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(59,91,219,0.3);
+}
+.btn-accent:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(59,91,219,0.4); }
+.btn-sm {
+  padding: 4px 10px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.btn-danger { background: #ffe0e0; color: #c92a2a; border: 1px solid #ffc9c9; }
+.btn-danger:hover { background: #ffc9c9; }
+.btn-add { background: #e7f5e7; color: #2f9e44; border: 1px solid #b2f2b2; }
+.btn-add:hover { background: #b2f2b2; }
+
+/* ── Toolbar ─────────────────────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px 0;
+  flex-wrap: wrap;
+}
+.tab {
+  padding: 7px 18px;
+  border-radius: 30px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.18s;
+}
+.tab.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 3px 12px rgba(59,91,219,0.3);
+}
+.tab:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+/* ── Main scroll area ────────────────────────────────────────────────── */
+.main { padding: 14px 20px 40px; }
+
+/* ── Session block ───────────────────────────────────────────────────── */
+.session-block { margin-bottom: 18px; border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-md); }
+.session-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 18px;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+}
+.session-am .session-header { background: linear-gradient(90deg, #f59f00, #fab005); color: white; }
+.session-pm .session-header { background: linear-gradient(90deg, #2f9e44, #37b24d); color: white; }
+.session-header-left { display: flex; align-items: center; gap: 8px; }
+.session-header-right { display: flex; gap: 6px; }
+
+/* ── Grid ────────────────────────────────────────────────────────────── */
+.timetable-grid { overflow-x: auto; background: var(--surface); }
+.grid-inner {
+  display: grid;
+  grid-template-columns: 110px repeat(7, 1fr);
+  gap: 0;
+  min-width: 700px;
+}
+
+.grid-col-header {
+  padding: 10px 6px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 12px;
+  border-bottom: 2px solid var(--border);
+  border-right: 1px solid var(--border);
+  background: var(--surface2);
+  letter-spacing: 0.3px;
+  color: var(--text2);
+}
+.grid-col-header.sat { color: var(--sat); }
+.grid-col-header.sun { color: var(--sun); }
+.grid-col-header:last-child { border-right: none; }
+
+/* Row: tiết label + cells */
+.grid-row-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  border-right: 2px solid var(--border);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text2);
+  background: var(--surface2);
+  gap: 3px;
+  position: relative;
+}
+.period-name { font-size: 13px; font-weight: 800; color: var(--text); }
+.period-time { font-size: 11px; color: var(--text2); font-weight: 600; }
+.period-actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.grid-row-header:hover .period-actions { opacity: 1; }
+
+.grid-cell {
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  min-height: 86px;
+  padding: 5px;
+  position: relative;
+  transition: background 0.15s;
+}
+.grid-cell:last-child { border-right: none; }
+
+/* Empty cell */
+.cell-empty {
+  width: 100%;
+  height: 100%;
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px dashed var(--border);
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.15s;
+  background: transparent;
+}
+.cell-empty:hover { border-color: var(--accent); color: var(--accent); background: rgba(59,91,219,0.04); }
+.cell-empty.drag-over { border-color: var(--accent); background: rgba(59,91,219,0.08); }
+
+/* Subject card */
+.cell-subject {
+  border-radius: 10px;
+  width: 100%;
+  min-height: 76px;
+  padding: 8px 8px 8px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: grab;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  user-select: none;
+  position: relative;
+  transition: transform 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+}
+.cell-subject::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 10px 0 0 10px;
+}
+.cell-subject:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.cell-subject.dragging { opacity: 0.45; cursor: grabbing; }
+.cell-subject.drag-over { outline: 2px solid rgba(255,255,255,0.7); }
+.subject-name { font-size: 12px; font-weight: 800; margin-bottom: 2px; }
+.subject-meta { opacity: 0.88; font-size: 10.5px; }
+.delete-btn {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 18px; height: 18px;
+  background: rgba(0,0,0,0.22);
+  color: white;
+  border-radius: 50%;
+  font-size: 9px;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, background 0.15s;
+}
+.cell-subject:hover .delete-btn { opacity: 1; }
+.delete-btn:hover { background: rgba(220,38,38,0.8) !important; }
+
+/* Add period row */
+.add-period-row {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: var(--surface);
+  border-top: 1px dashed var(--border);
+}
+
+/* ── Month View ──────────────────────────────────────────────────────── */
+.month-nav { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-weight: 800; font-size: 16px; }
+.month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.month-day-header {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text2);
+  padding: 5px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.month-day-header.sat { color: var(--sat); }
+.month-day-header.sun { color: var(--sun); }
+.month-cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-height: 75px;
+  padding: 7px;
+  font-size: 11px;
+  transition: box-shadow 0.15s;
+}
+.month-cell.other-month { opacity: 0.35; }
+.month-cell.today { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(59,91,219,0.25); }
+.month-day-num { font-weight: 800; font-size: 13px; margin-bottom: 4px; }
+.month-pill {
+  border-radius: 4px; padding: 2px 5px; font-size: 10px; font-weight: 700;
+  color: white; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── Error banner ────────────────────────────────────────────────────── */
+.error-banner {
+  margin: 10px 20px 0;
+  background: #ffe3e3; color: #c92a2a;
+  padding: 9px 14px; border-radius: 10px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; font-weight: 700;
+  animation: slideUp 0.2s ease;
+}
+body.dark .error-banner { background: #2d1515; color: #ff8787; }
+
+/* ── Modal ───────────────────────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(5px);
+  z-index: 300;
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.15s;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-box {
+  background: var(--surface);
+  border-radius: 22px;
+  padding: 28px;
+  width: 100%; max-width: 370px;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.2s ease;
+}
+@keyframes slideUp { from { transform: translateY(18px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-title { font-size: 18px; font-weight: 900; margin-bottom: 20px; }
+.form-group { margin-bottom: 13px; }
+label { display: block; font-size: 11px; font-weight: 800; color: var(--text2); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.6px; }
+input[type="text"] {
+  width: 100%; padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface2);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px; font-weight: 600;
+  outline: none; transition: border-color 0.18s;
+}
+input[type="text"]:focus { border-color: var(--accent); }
+input[type="text"].err { border-color: #e03131; }
+input[type="color"] {
+  width: 100%; height: 44px; padding: 3px 6px;
+  border: 2px solid var(--border); border-radius: 10px;
+  background: var(--surface2); cursor: pointer; outline: none;
+}
+.err-msg { color: #e03131; font-size: 11px; font-weight: 700; margin-top: 3px; display: none; }
+.err-msg.show { display: block; }
+.modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+.modal-actions button { flex: 1; padding: 11px; border-radius: 11px; font-size: 14px; font-weight: 800; }
+
+/* Period time modal */
+.time-modal-box { max-width: 300px; }
+
+/* ── Period time edit ────────────────────────────────────────────────── */
+input[type="time"] {
+  width: 100%; padding: 9px 12px;
+  border: 2px solid var(--border); border-radius: 10px;
+  background: var(--surface2); color: var(--text);
+  font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 600;
+  outline: none; transition: border-color 0.18s;
+}
+input[type="time"]:focus { border-color: var(--accent); }
+
+@media (max-width: 640px) {
+  .main { padding: 10px 10px 40px; }
+  .toolbar { padding: 10px 10px 0; }
+  header { padding: 0 12px; }
+  .modal-box { margin: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="logo-icon">📚</span>TKB PRO</div>
+  <div class="header-right">
+    <button class="btn" onclick="toggleDark()" id="darkBtn">🌙</button>
+    <button class="btn-accent" onclick="exportPDF()">📄 PDF</button>
+  </div>
+</header>
+
+<div id="errorBanner" style="display:none" class="error-banner">
+  <span id="errorMsg"></span>
+  <button onclick="hideError()" style="background:none;border:none;cursor:pointer;font-size:18px;padding:0 4px;">✕</button>
+</div>
+
+<div class="toolbar">
+  <button class="tab active" id="tabWeek" onclick="setView('week')">📅 Tuần</button>
+  <button class="tab" id="tabMonth" onclick="setView('month')">🗓 Tháng</button>
+</div>
+
+<div class="main">
+  <div id="weekView"></div>
+  <div id="monthView" style="display:none"></div>
+</div>
+
+<!-- Subject Modal -->
+<div class="modal-backdrop" id="subjectModal" style="display:none" onclick="handleBackdrop(event,'subjectModal')">
+  <div class="modal-box">
+    <div class="modal-title">➕ Thêm môn học</div>
+    <div class="form-group">
+      <label>Tên môn <span style="color:#e03131">*</span></label>
+      <input type="text" id="inp-name" placeholder="VD: Toán, Văn, Anh..." />
+      <div class="err-msg" id="nameErr">Vui lòng nhập tên môn!</div>
+    </div>
+    <div class="form-group">
+      <label>Phòng học</label>
+      <input type="text" id="inp-room" placeholder="VD: A101" />
+    </div>
+    <div class="form-group">
+      <label>Giáo viên</label>
+      <input type="text" id="inp-teacher" placeholder="VD: Thầy Nguyễn" />
+    </div>
+    <div class="form-group">
+      <label>Màu sắc</label>
+      <input type="color" id="inp-color" value="#3b5bdb" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-accent" onclick="saveSubject()">💾 Lưu</button>
+      <button class="btn" onclick="closeModal('subjectModal')">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<!-- Period Edit Modal -->
+<div class="modal-backdrop" id="periodModal" style="display:none" onclick="handleBackdrop(event,'periodModal')">
+  <div class="modal-box time-modal-box">
+    <div class="modal-title">⏰ Chỉnh sửa tiết</div>
+    <div class="form-group">
+      <label>Tên tiết</label>
+      <input type="text" id="pEdit-name" placeholder="VD: Tiết 1" />
+    </div>
+    <div class="form-group">
+      <label>Giờ bắt đầu</label>
+      <input type="time" id="pEdit-start" />
+    </div>
+    <div class="form-group">
+      <label>Giờ kết thúc</label>
+      <input type="time" id="pEdit-end" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-accent" onclick="savePeriod()">💾 Lưu</button>
+      <button class="btn" onclick="closeModal('periodModal')">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────────
+const DAYS = [
+  { key:"T2", label:"Thứ 2", cls:"" },
+  { key:"T3", label:"Thứ 3", cls:"" },
+  { key:"T4", label:"Thứ 4", cls:"" },
+  { key:"T5", label:"Thứ 5", cls:"" },
+  { key:"T6", label:"Thứ 6", cls:"" },
+  { key:"T7", label:"Thứ 7", cls:"sat" },
+  { key:"CN", label:"CN",    cls:"sun" },
+];
+
+const DEFAULT_PERIODS = {
+  morning: [
+    { id:"am1", name:"Tiết 1", start:"07:00", end:"07:45" },
+    { id:"am2", name:"Tiết 2", start:"07:50", end:"08:35" },
+    { id:"am3", name:"Tiết 3", start:"08:45", end:"09:30" },
+    { id:"am4", name:"Tiết 4", start:"09:40", end:"10:25" },
+    { id:"am5", name:"Tiết 5", start:"10:30", end:"11:15" },
+  ],
+  afternoon: [
+    { id:"pm1", name:"Tiết 1", start:"13:00", end:"13:45" },
+    { id:"pm2", name:"Tiết 2", start:"13:50", end:"14:35" },
+    { id:"pm3", name:"Tiết 3", start:"14:45", end:"15:30" },
+    { id:"pm4", name:"Tiết 4", start:"15:40", end:"16:25" },
+  ],
+};
+
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem("tkbPro_v4") || "null") || {
+      subjects: {},
+      periods: JSON.parse(JSON.stringify(DEFAULT_PERIODS)),
+    };
+  } catch(e) { return { subjects:{}, periods: JSON.parse(JSON.stringify(DEFAULT_PERIODS)) }; }
+}
+
+let state = loadState();
+function persist() { localStorage.setItem("tkbPro_v4", JSON.stringify(state)); }
+
+let currentView = "week";
+let dragKey = null;
+let modalKey = null;       // "T2-am1" etc
+let editPeriodKey = null;  // { session, index }
+let currentMonth = new Date();
+
+// ── Dark mode ─────────────────────────────────────────────────────────────────
+function toggleDark() {
+  document.body.classList.toggle("dark");
+  const d = document.body.classList.contains("dark");
+  document.getElementById("darkBtn").textContent = d ? "☀" : "🌙";
+  localStorage.setItem("tkbTheme", d ? "dark" : "light");
+}
+if (localStorage.getItem("tkbTheme") === "dark") {
+  document.body.classList.add("dark");
+  document.getElementById("darkBtn").textContent = "☀";
+}
+
+// ── Error ─────────────────────────────────────────────────────────────────────
+function showError(msg) {
+  document.getElementById("errorMsg").textContent = msg;
+  document.getElementById("errorBanner").style.display = "flex";
+  setTimeout(hideError, 4000);
+}
+function hideError() { document.getElementById("errorBanner").style.display = "none"; }
+
+// ── Views ─────────────────────────────────────────────────────────────────────
+function setView(v) {
+  currentView = v;
+  document.getElementById("weekView").style.display = v === "week" ? "" : "none";
+  document.getElementById("monthView").style.display = v === "month" ? "" : "none";
+  document.getElementById("tabWeek").className = "tab" + (v === "week" ? " active" : "");
+  document.getElementById("tabMonth").className = "tab" + (v === "month" ? " active" : "");
+  if (v === "month") renderMonth();
+  else renderWeek();
+}
+
+// ── Render Week ───────────────────────────────────────────────────────────────
+function renderWeek() {
+  const wrap = document.getElementById("weekView");
+  let html = "";
+
+  ["morning","afternoon"].forEach(session => {
+    const isAm = session === "morning";
+    const icon = isAm ? "🌤" : "🌇";
+    const label = isAm ? "BUỔI SÁNG" : "BUỔI CHIỀU";
+    const periods = state.periods[session];
+
+    html += `<div class="session-block session-${isAm?"am":"pm"}">
+      <div class="session-header">
+        <div class="session-header-left">${icon} ${label}</div>
+        <div class="session-header-right">
+          <button class="btn btn-sm" style="background:rgba(255,255,255,0.25);color:white;border:none;"
+            onclick="addPeriod('${session}')">+ Thêm tiết</button>
+        </div>
+      </div>
+      <div class="timetable-grid">
+        <div class="grid-inner">`;
+
+    // Column headers
+    html += `<div class="grid-col-header" style="font-size:11px;color:var(--text2)">Tiết / Thời gian</div>`;
+    DAYS.forEach(d => {
+      html += `<div class="grid-col-header ${d.cls}">${d.label}</div>`;
+    });
+
+    // Period rows
+    periods.forEach((p, idx) => {
+      html += `<div class="grid-row-header">
+        <span class="period-name">${esc(p.name)}</span>
+        <span class="period-time">${p.start} – ${p.end}</span>
+        <div class="period-actions">
+          <button class="btn btn-sm" style="padding:2px 7px;font-size:10px;"
+            onclick="openPeriodEdit('${session}',${idx})">✏</button>
+          ${periods.length > 1 ? `<button class="btn btn-sm btn-danger" style="padding:2px 7px;font-size:10px;"
+            onclick="removePeriod('${session}',${idx})">✕</button>` : ""}
+        </div>
+      </div>`;
+
+      DAYS.forEach(d => {
+        const key = d.key + "-" + session + "-" + p.id;
+        const s = state.subjects[key];
+        html += `<div class="grid-cell">`;
+        if (s) {
+          html += `<div class="cell-subject"
+            style="background:${s.color}"
+            draggable="true"
+            ondragstart="onDragStart('${key}',event)"
+            ondragover="onDragOver(event)"
+            ondrop="onDrop('${key}',event)"
+            ondragend="onDragEnd(event)"
+            ondragleave="onDragLeave(event)">
+            <button class="delete-btn"
+              onpointerdown="event.stopPropagation()"
+              onclick="removeSubject(event,'${key}')">✕</button>
+            <div class="subject-name">${esc(s.name)}</div>
+            <div class="subject-meta">🏫 ${esc(s.room)}</div>
+            <div class="subject-meta">👩‍🏫 ${esc(s.teacher)}</div>
+          </div>`;
+        } else {
+          html += `<div class="cell-empty"
+            onclick="openSubjectModal('${key}')"
+            ondragover="onDragOver(event)"
+            ondrop="onDrop('${key}',event)"
+            ondragleave="onDragLeave(event)">+</div>`;
+        }
+        html += `</div>`;
+      });
+    });
+
+    html += `</div></div></div></div>`;
+  });
+
+  wrap.innerHTML = html;
+}
+
+// ── Period management ─────────────────────────────────────────────────────────
+function addPeriod(session) {
+  const arr = state.periods[session];
+  const isAm = session === "morning";
+  const prefix = isAm ? "am" : "pm";
+  const newId = prefix + Date.now();
+  const num = arr.length + 1;
+  arr.push({ id: newId, name: `Tiết ${num}`, start: isAm ? "11:20" : "16:30", end: isAm ? "12:05" : "17:15" });
+  persist();
+  renderWeek();
+}
+
+function removePeriod(session, idx) {
+  const arr = state.periods[session];
+  if (arr.length <= 1) return;
+  if (!confirm(`Xóa "${arr[idx].name}"? Dữ liệu môn học trong tiết này sẽ mất.`)) return;
+  const pid = arr[idx].id;
+  // Remove subjects for this period
+  Object.keys(state.subjects).forEach(k => { if (k.includes("-"+session+"-"+pid)) delete state.subjects[k]; });
+  arr.splice(idx, 1);
+  persist();
+  renderWeek();
+}
+
+// Period edit modal
+function openPeriodEdit(session, idx) {
+  editPeriodKey = { session, idx };
+  const p = state.periods[session][idx];
+  document.getElementById("pEdit-name").value = p.name;
+  document.getElementById("pEdit-start").value = p.start;
+  document.getElementById("pEdit-end").value = p.end;
+  document.getElementById("periodModal").style.display = "flex";
+  setTimeout(() => document.getElementById("pEdit-name").focus(), 80);
+}
+
+function savePeriod() {
+  const { session, idx } = editPeriodKey;
+  state.periods[session][idx].name  = document.getElementById("pEdit-name").value.trim() || state.periods[session][idx].name;
+  state.periods[session][idx].start = document.getElementById("pEdit-start").value;
+  state.periods[session][idx].end   = document.getElementById("pEdit-end").value;
+  persist();
+  closeModal("periodModal");
+  renderWeek();
+}
+
+// ── Subject modal ─────────────────────────────────────────────────────────────
+function openSubjectModal(key) {
+  modalKey = key;
+  document.getElementById("inp-name").value = "";
+  document.getElementById("inp-room").value = "";
+  document.getElementById("inp-teacher").value = "";
+  document.getElementById("inp-color").value = "#3b5bdb";
+  document.getElementById("inp-name").classList.remove("err");
+  document.getElementById("nameErr").classList.remove("show");
+  document.getElementById("subjectModal").style.display = "flex";
+  setTimeout(() => document.getElementById("inp-name").focus(), 80);
+}
+
+function saveSubject() {
+  const name = document.getElementById("inp-name").value.trim();
+  if (!name) {
+    document.getElementById("inp-name").classList.add("err");
+    document.getElementById("nameErr").classList.add("show");
+    document.getElementById("inp-name").focus();
+    return;
+  }
+  state.subjects[modalKey] = {
+    name,
+    room: document.getElementById("inp-room").value.trim(),
+    teacher: document.getElementById("inp-teacher").value.trim(),
+    color: document.getElementById("inp-color").value,
+  };
+  persist();
+  closeModal("subjectModal");
+  renderWeek();
+  if (currentView === "month") renderMonth();
+}
+
+function removeSubject(e, key) {
+  e.stopPropagation();
+  if (!confirm("Xóa môn học này?")) return;
+  delete state.subjects[key];
+  persist();
+  renderWeek();
+  if (currentView === "month") renderMonth();
+}
+
+// ── Modal helpers ─────────────────────────────────────────────────────────────
+function closeModal(id) { document.getElementById(id).style.display = "none"; }
+function handleBackdrop(e, id) { if (e.target === e.currentTarget) closeModal(id); }
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    if (document.getElementById("subjectModal").style.display !== "none") saveSubject();
+    if (document.getElementById("periodModal").style.display !== "none") savePeriod();
+  }
+  if (e.key === "Escape") {
+    closeModal("subjectModal");
+    closeModal("periodModal");
+  }
+});
+
+// ── Drag & Drop ───────────────────────────────────────────────────────────────
+function onDragStart(key, e) {
+  dragKey = key;
+  e.currentTarget.classList.add("dragging");
+  e.dataTransfer.effectAllowed = "move";
+}
+function onDragOver(e) { e.preventDefault(); e.currentTarget.classList.add("drag-over"); }
+function onDragLeave(e) { e.currentTarget.classList.remove("drag-over"); }
+function onDragEnd(e) { e.currentTarget.classList.remove("dragging"); }
+function onDrop(targetKey, e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove("drag-over");
+  if (!dragKey || dragKey === targetKey) return;
+  const a = state.subjects[dragKey];
+  const b = state.subjects[targetKey];
+  if (b) state.subjects[dragKey] = b; else delete state.subjects[dragKey];
+  if (a) state.subjects[targetKey] = a; else delete state.subjects[targetKey];
+  persist();
+  renderWeek();
+  dragKey = null;
+}
+
+// ── Month View ────────────────────────────────────────────────────────────────
+const DOW_MAP = { 1:"T2", 2:"T3", 3:"T4", 4:"T5", 5:"T6", 6:"T7", 0:"CN" };
+const MONTH_NAMES = ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"];
+
+function renderMonth() {
+  const y = currentMonth.getFullYear();
+  const m = currentMonth.getMonth();
+  const today = new Date();
+  const firstDow = new Date(y, m, 1).getDay();
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  const daysInPrev = new Date(y, m, 0).getDate();
+
+  const headers = [
+    { label:"CN", cls:"sun" }, { label:"T2", cls:"" }, { label:"T3", cls:"" },
+    { label:"T4", cls:"" }, { label:"T5", cls:"" }, { label:"T6", cls:"" },
+    { label:"T7", cls:"sat" }
+  ];
+
+  let html = `<div class="month-nav">
+    <button class="btn" onclick="changeMonth(-1)">‹</button>
+    <span>${MONTH_NAMES[m]} ${y}</span>
+    <button class="btn" onclick="changeMonth(1)">›</button>
+  </div>
+  <div class="month-grid">`;
+
+  headers.forEach(h => html += `<div class="month-day-header ${h.cls}">${h.label}</div>`);
+
+  for (let i = 0; i < firstDow; i++) {
+    html += `<div class="month-cell other-month"><div class="month-day-num">${daysInPrev - firstDow + i + 1}</div></div>`;
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(y, m, d);
+    const dow = date.getDay();
+    const dayKey = DOW_MAP[dow];
+    const isToday = d === today.getDate() && m === today.getMonth() && y === today.getFullYear();
+
+    let pills = "";
+    ["morning","afternoon"].forEach(session => {
+      state.periods[session].forEach(p => {
+        const s = state.subjects[dayKey + "-" + session + "-" + p.id];
+        if (s) pills += `<div class="month-pill" style="background:${s.color}">${esc(s.name)}</div>`;
+      });
+    });
+
+    html += `<div class="month-cell${isToday?" today":""}">
+      <div class="month-day-num">${d}</div>${pills}
+    </div>`;
+  }
+
+  const total = firstDow + daysInMonth;
+  const rem = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (let i = 1; i <= rem; i++) {
+    html += `<div class="month-cell other-month"><div class="month-day-num">${i}</div></div>`;
+  }
+
+  html += "</div>";
+  document.getElementById("monthView").innerHTML = html;
+}
+
+function changeMonth(dir) {
+  currentMonth.setMonth(currentMonth.getMonth() + dir);
+  renderMonth();
+}
+
+// ── Export PDF ────────────────────────────────────────────────────────────────
+function exportPDF() {
+  try {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a3" });
+
+    pdf.setFont("helvetica","bold");
+    pdf.setFontSize(20);
+    pdf.text("THOI KHOA BIEU", 14, 16);
+    pdf.setFontSize(10); pdf.setFont("helvetica","normal");
+    pdf.setTextColor(120);
+    pdf.text(new Date().toLocaleDateString("vi-VN"), 14, 23);
+    pdf.setTextColor(0);
+
+    const dayLabels = DAYS.map(d => d.label);
+
+    ["morning","afternoon"].forEach((session, si) => {
+      const isAm = session === "morning";
+      const title = isAm ? "BUOI SANG" : "BUOI CHIEU";
+      const y = si === 0 ? 28 : null;
+
+      const head = [["Tiet / Gio", ...dayLabels]];
+      const body = state.periods[session].map(p => [
+        `${p.name}\n${p.start}-${p.end}`,
+        ...DAYS.map(d => {
+          const s = state.subjects[d.key + "-" + session + "-" + p.id];
+          return s ? `${s.name}\n${s.room}\n${s.teacher}` : "-";
+        }),
+      ]);
+
+      pdf.autoTable({
+        head,
+        body,
+        startY: si === 0 ? 28 : pdf.lastAutoTable.finalY + 10,
+        didDrawPage: (data) => {
+          if (data.pageNumber === 1 || si > 0) {
+            pdf.setFont("helvetica","bold");
+            pdf.setFontSize(12);
+            pdf.setTextColor(isAm ? 245 : 47, isAm ? 159 : 158, isAm ? 0 : 68);
+            const ty = si === 0 ? 26 : pdf.lastAutoTable.finalY + 8;
+          }
+        },
+        styles: { font:"helvetica", fontSize:9, cellPadding:4, valign:"middle", lineColor:[220,220,230], lineWidth:0.3 },
+        headStyles: {
+          fillColor: isAm ? [245,159,0] : [47,158,68],
+          textColor: 255, fontStyle:"bold", fontSize:10
+        },
+        columnStyles: { 0: { fontStyle:"bold", fillColor:[248,249,255], cellWidth:28 } },
+        alternateRowStyles: { fillColor: isAm ? [255,252,240] : [240,253,244] },
+      });
+    });
+
+    pdf.save("ThoiKhoaBieu.pdf");
+  } catch(e) { showError("Lỗi xuất PDF: " + e.message); }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function esc(s) {
+  if (!s) return "";
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderWeek();
+</script>
+</body>
+</html>
